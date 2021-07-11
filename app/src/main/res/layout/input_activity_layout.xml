@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".InputActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:theme="@style/Theme.Demo.AppBarOverlay">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="@color/black"
+            app:title="Take a note"
+            app:popupTheme="@style/Theme.Demo.PopupOverlay" />
+
+
+        <EditText
+            android:id="@+id/et_content"
+            android:background="@drawable/edit_view_background"
+            android:layout_margin="16dp"
+            android:padding="4dp"
+            android:scrollbars="vertical"
+            android:fadeScrollbars="false"
+            android:gravity="top"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:inputType="textMultiLine"
+            android:textColor="@color/black"
+            android:layout_width="match_parent"
+            android:layout_height="300dp">
+        </EditText>
+
+        <Button
+            android:id="@+id/bt_confirm"
+            android:text="confirm"
+            android:textColor="@color/black"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
+            android:layout_height="50dp">
+        </Button>
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
