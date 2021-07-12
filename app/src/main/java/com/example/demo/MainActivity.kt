@@ -83,7 +83,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fab.setOnClickListener {
-            val intent = Intent(this, InputActivity::class.java).apply {
+            Intent(this, InputActivity::class.java).apply {
                 startActivityForResult(this, REQUEST_CODE_INPUT)
             }
         }

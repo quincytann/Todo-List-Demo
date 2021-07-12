@@ -18,6 +18,6 @@ interface TodoListDao {
     @Delete
     fun deleteData(data: TodoListEntity)
 
-    @Update()
+    @Update
     fun updateData(data: TodoListEntity)
 }
