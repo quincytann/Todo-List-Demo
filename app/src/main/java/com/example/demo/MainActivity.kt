@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.demo.InputActivity.Companion.CONTENT_STR
 import com.example.demo.databinding.ActivityMainBinding
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +22,12 @@ class MainActivity : AppCompatActivity() {
         initView()
     }
 
+
+    private fun ClosedRange<Char>.randomString(length: Int) =
+        (1..length)
+            .map { (Random().nextInt(endInclusive.toInt() - start.toInt()) + start.toInt()).toChar() }
+            .joinToString("")
+
     private fun initView() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -30,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             for (i in 0..19) {
                 add(
                     TodoData(
-                        (0..100000).random().toString(),
+                        ('a'..'z').randomString(50),
                         System.currentTimeMillis() + (0..100000000).random(),
                         (0..1).random() == 0
                     )
@@ -66,7 +73,8 @@ class MainActivity : AppCompatActivity() {
             val content = data?.getStringExtra(CONTENT_STR)
             content?.let {
                 val time = System.currentTimeMillis()
-                myAdapter.addData(1, TodoData(it, time, false))
+                myAdapter.addData(0, TodoData(it, time, false))
+                binding.rvList.scrollToPosition(0)
             }
         }
     }
