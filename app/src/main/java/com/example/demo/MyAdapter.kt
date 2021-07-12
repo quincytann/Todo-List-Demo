@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.recyclerview.widget.RecyclerView
+import com.example.demo.dao.TodoListEntity
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,9 +19,9 @@ import java.util.*
  */
 
 class MyAdapter(
-    private val data: MutableList<TodoData>,
-    private val clickCheckBoxAction: (() -> Unit),
-    private val clickCloseAction: (() -> Unit)
+    private val data: MutableList<TodoListEntity>,
+    private val clickCheckBoxAction: ((TodoListEntity) -> Unit),
+    private val clickCloseAction: ((TodoListEntity) -> Unit)
 ) : RecyclerView.Adapter<MyViewHolder>() {
 
     private val sdf = SimpleDateFormat("E, d MMM yyyy hh:mm:ss", Locale.ENGLISH)
@@ -32,26 +33,26 @@ class MyAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        //Log.d("onBindViewHolder", "$position")
         holder.apply {
-            checkBox.isChecked = data[position].checked
+            checkBox.isChecked = data[position].completed
             val flags = content.paint.flags
             content.paint.flags = getPaintFlags(flags, checkBox.isChecked)
             content.text = data[position].content
             time.text = sdf.format(data[position].time)
             close.setOnClickListener {
+                // 数据库删除该条记录
+                clickCloseAction.invoke(data[position])
                 // 点击item删除该item
                 deleteData(position)
-                // 数据库删除该条记录
-                clickCloseAction.invoke()
             }
             checkBox.setOnClickListener {
+                // 数据库数据状态更新
+                data[position].completed = checkBox.isChecked
+                clickCheckBoxAction.invoke(data[position])
                 // 更新UI
                 val flags = content.paint.flags
                 content.paint.flags = getPaintFlags(flags, checkBox.isChecked)
                 content.postInvalidate()
-                // 数据库数据状态更新
-                clickCheckBoxAction.invoke()
             }
         }
     }
@@ -68,7 +69,7 @@ class MyAdapter(
         }
     }
 
-    fun addData(position: Int, newData: TodoData) {
+    fun addData(position: Int, newData: TodoListEntity) {
         data.add(position, newData)
         notifyItemInserted(position)
         notifyDataSetChanged()
