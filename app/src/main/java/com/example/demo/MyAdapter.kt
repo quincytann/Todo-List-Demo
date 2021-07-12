@@ -71,6 +71,7 @@ class MyAdapter(
     fun addData(position: Int, newData: TodoData) {
         data.add(position, newData)
         notifyItemInserted(position)
+        notifyDataSetChanged()
     }
 
     fun deleteData(position: Int) {
